@@ -3,22 +3,32 @@ import React, { useState } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 import MicIcon from "@material-ui/icons/Mic";
 import "./Search.css";
-import { useStateValue } from "../StateProvider";
+// import { useStateValue } from "../StateProvider";
 import { useNavigate } from "react-router-dom";
-import { action } from "../reducer";
-
+// import { action } from "../reducer";
+import { useDispatch } from "react-redux";
+import { set_data } from "../features/userSlice";
 function Search({ hideButtons }) {
-  const [{}, dispatch] = useStateValue();
+  // const [{}, dispatch] = useStateValue();
 
   const [input, setInput] = useState("");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const search = (e) => {
     e.preventDefault();
+
+    // dispatch({
+    //   type: action.SET_SEARCH_TERM,
+    //   term: input,
+    // });
+
+    dispatch(
+      set_data({
+        data: input,
+      })
+    );
+
     navigate("/search");
-    dispatch({
-      type: action.SET_SEARCH_TERM,
-      term: input,
-    });
     setInput("");
   };
   return (

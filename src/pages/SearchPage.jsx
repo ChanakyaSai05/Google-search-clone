@@ -8,13 +8,17 @@ import ImageIcon from "@material-ui/icons/Image";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import RoomIcon from "@material-ui/icons/Room";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import { useStateValue } from "../StateProvider";
+// import { useStateValue } from "../StateProvider";
 import UseGoogleSearch from "../useGoogleSearch";
+import { selectUser } from "../features/userSlice";
+import { useSelector } from "react-redux";
 
 function SearchPage() {
-  const [{ term }] = useStateValue();
-  const { data } = UseGoogleSearch(term);
-  console.log(data);
+  // const [{ term }] = useStateValue();
+  const user = useSelector(selectUser);
+  console.log(user);
+  const { data } = UseGoogleSearch(user);
+  // console.log(data);
   return (
     <div className="searchPage">
       <div className="searchPage-header">
@@ -66,11 +70,11 @@ function SearchPage() {
           </div>
         </div>
       </div>
-      {term && (
+      {user && (
         <div className="searchPage-results">
           <p className="searchPage-resultCount">
             About {data?.searchInformation.formattedTotalResults} results (
-            {data?.searchInformation.formattedSearchTime} seconds) for {term}
+            {data?.searchInformation.formattedSearchTime} seconds) for {user}
           </p>
           {data?.items.map((item) => (
             <div className="searchPage-result">
